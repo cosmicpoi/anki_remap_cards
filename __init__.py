@@ -32,7 +32,6 @@ def remapCards(deckName):
         # Construct deck name
         newDeckName = deckName + "::" + templateName
         modifiedDecks.add(newDeckName)
-        print(newDeckName)
 
         # Get or create deck and did
         did = col.decks.id(newDeckName)
@@ -59,6 +58,11 @@ def remapCardsHandler(sidebar: "SidebarTreeView",  menu: QMenu, item: SidebarIte
     # Adds our option to the right click menu for tags in the deck browser
     if item.item_type == SidebarItemType.DECK:
         menu.addSeparator() 
+        deck = mw.col.decks.by_name(item.full_name)
+        print(deck)
+
+        if mw.col.decks.is_filtered( deck['id'] ):
+            return
         menu.addAction("Map card types to decks", lambda: remapCards(item.full_name) )
         
 
